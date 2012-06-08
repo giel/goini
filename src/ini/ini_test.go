@@ -37,6 +37,19 @@ func TestGetBool(t *testing.T) {
 	if !found || b {
 		t.Error("Example: parse error for key cheese of section pizza.")
 	}
+	// now check for case insensitvity
+	b, found = dict.GetBool("Pizza", "Mushrooms")
+	if !found || !b {
+		t.Error("Example: parse error for key Mushrooms of section Pizza.")
+	}
+	b, found = dict.GetBool("Pizza", "capres")
+	if !found || b {
+		t.Error("Example: parse error for key capres of section Pizza.")
+	}
+	b, found = dict.GetBool("pizza", "Cheese")
+	if !found || b {
+		t.Error("Example: parse error for key Cheese of section pizza.")
+	}
 }
 
 func TestGetStringIntAndDouble(t *testing.T) {
@@ -50,11 +63,28 @@ func TestGetStringIntAndDouble(t *testing.T) {
 	}
 	str, found = dict.GetString("wine", "country")
 	if !found || str != "Spain" {
-		t.Error("Example: parse error for key grape of section wine.")
+		t.Error("Example: parse error for key country of section wine.")
 	}
 	d, found := dict.GetDouble("wine", "alcohol")
 	if !found || d != 12.5 {
-		t.Error("Example: parse error for key grape of section wine.")
+		t.Error("Example: parse error for key wine of section wine.")
+	}
+	// now check for case insensitvity
+	str, found = dict.GetString("Wine", "Grape")
+	if !found || str != "Cabernet Sauvignon" {
+		t.Error("Example: parse error for key Grape of section Wine.")
+	}
+	i, found = dict.GetInt("Wine", "year")
+	if !found || i != 1989 {
+		t.Error("Example: parse error for key year of section Wine.")
+	}
+	str, found = dict.GetString("wine", "Country")
+	if !found || str != "Spain" {
+		t.Error("Example: parse error for key Country of section wine.")
+	}
+	d, found = dict.GetDouble("Wine", "Alcohol")
+	if !found || d != 12.5 {
+		t.Error("Example: parse error for key Alcohol of section Wine.")
 	}
 }
 

@@ -60,7 +60,6 @@ func Load(filename string) (dict Dict, err error) {
 				err.Error() + fmt.Sprintf("'%s:%d'.", filename, lineno))
 		}
 	}
-
 	return
 }
 
@@ -68,17 +67,17 @@ func (e Error) Error() string {
 	return string(e)
 }
 func (dict Dict) parseLine(section, line string) (string, error) {
-	// commets
+	// comments
 	if line[0] == '#' || line[0] == ';' {
 		return section, nil
 	}
 
 	// section name
 	if line[0] == '[' && line[len(line)-1] == ']' {
-		section := strings.TrimFunc(line[1:len(line)-1], unicode.IsSpace)
-		section = strings.ToLower(section)
-		dict[section] = make(map[string]string)
-		return section, nil
+		sec := strings.TrimFunc(line[1:len(line)-1], unicode.IsSpace)
+		sec = strings.ToLower(sec)
+		dict[sec] = make(map[string]string)
+		return sec, nil
 	}
 
 	// key = value
@@ -101,15 +100,15 @@ func (dict Dict) parseLine(section, line string) (string, error) {
 
 func (dict Dict) add(section, key, value string) {
 	key = strings.ToLower(key)
-	dict[section][key] = value
+	dict[strings.ToLower(section)][key] = value
 }
 
 func (dict Dict) GetBool(section, key string) (bool, bool) {
-	sec, ok := dict[section]
+	sec, ok := dict[strings.ToLower(section)]
 	if !ok {
 		return false, false
 	}
-	value, ok := sec[key]
+	value, ok := sec[strings.ToLower(key)]
 	if !ok {
 		return false, false
 	}
@@ -124,11 +123,11 @@ func (dict Dict) GetBool(section, key string) (bool, bool) {
 }
 
 func (dict Dict) GetString(section, key string) (string, bool) {
-	sec, ok := dict[section]
+	sec, ok := dict[strings.ToLower(section)]
 	if !ok {
 		return "", false
 	}
-	value, ok := sec[key]
+	value, ok := sec[strings.ToLower(key)]
 	if !ok {
 		return "", false
 	}
@@ -136,11 +135,11 @@ func (dict Dict) GetString(section, key string) (string, bool) {
 }
 
 func (dict Dict) GetInt(section, key string) (int, bool) {
-	sec, ok := dict[section]
+	sec, ok := dict[strings.ToLower(section)]
 	if !ok {
 		return 0, false
 	}
-	value, ok := sec[key]
+	value, ok := sec[strings.ToLower(key)]
 	if !ok {
 		return 0, false
 	}
@@ -152,11 +151,11 @@ func (dict Dict) GetInt(section, key string) (int, bool) {
 }
 
 func (dict Dict) GetDouble(section, key string) (float64, bool) {
-	sec, ok := dict[section]
+	sec, ok := dict[strings.ToLower(section)]
 	if !ok {
 		return 0, false
 	}
-	value, ok := sec[key]
+	value, ok := sec[strings.ToLower(key)]
 	if !ok {
 		return 0, false
 	}
