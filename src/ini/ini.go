@@ -177,6 +177,32 @@ func (dict Dict) GetSections() []string {
 	return sections
 }
 
+// Returns the values of a key0, key1, key2 ...
+func (dict Dict) SequencedKeyValues(section, key string) ([]string, bool) {
+	var (
+		files      []string
+		result     bool
+		searchNext bool
+		filekey    string
+		i          int
+	)
+
+	result = false
+	searchNext = true
+	for i = 0; searchNext == true; i++ {
+		filekey = key + strconv.Itoa(i)
+
+		afile, found := dict.GetString(section, filekey)
+		if found {
+			files = append(files, afile)
+			result = true
+		}
+		// search further until not found. Accept 0 based and 1 based numbering.
+		searchNext = (found || i == 0)
+	}
+	return files, result
+}
+
 func newError(message string) (e error) {
 	return Error(message)
 }

@@ -97,12 +97,29 @@ func TestGetNotExist(t *testing.T) {
 
 func TestGetSections(t *testing.T) {
 	sections := dict.GetSections()
-	if len(sections) != 3 {
+	if len(sections) != 4 {
 		t.Error("The number of sections is wrong:", len(sections))
 	}
 	for _, section := range sections {
-		if section != "" && section != "pizza" && section != "wine" {
-			t.Errorf("Section '%s' should not be exist.", section)
+		if section != "" && section != "pizza" && section != "wine" &&
+			section != "monkeys" {
+			t.Errorf("Section '%s' should not exist.", section)
 		}
 	}
+}
+
+func TestGetStringArray(t *testing.T) {
+	keys, found := dict.SequencedKeyValues("Monkeys", "Monkey")
+	if !found {
+		t.Error("Monkeys sections should be found")
+	}
+	if len(keys) != 3 {
+		t.Error("The number of sections is wrong:", len(keys))
+	}
+	for _, key := range keys {
+		if key != "" && key != "Chimpanzee" && key != "Gorilla" && key != "Orangutan" {
+			t.Errorf("Monkey '%s' should not exist.", key)
+		}
+	}
+
 }
