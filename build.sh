@@ -32,7 +32,7 @@ build src/ini
 if [ "$errorFound" = "" ]; then
     echo "No errors found"
 else
-    echo "*** Errors found in test, msgc not build ***"
+    echo "*** Errors found in test, ini not build ***"
 fi
 echo "Build done."
 
