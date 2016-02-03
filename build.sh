@@ -2,7 +2,7 @@
 
 # Format, build, test and install script for ini. 
 # Meant to run from this directory.
-# Temporarily sets GOPATH variable !
+# NOTE: Temporarily sets GOPATH variable !!!
 
 errorFound=""
 
